@@ -8,43 +8,46 @@ namespace graphQLV2.GraphQL
 {
     public class Query
     {
-        [GraphQLMetadata("books")]
-        public IEnumerable<Book> GetBooks()
+        [GraphQLMetadata("movies")]
+        public IEnumerable<Movie> getMovies()
         {
             using (var db = new StoreContext())
             {
-                return db.Books
-                .Include(b => b.Author)
+                return db.Movies
+                .Include(m => m.Actors)
                 .ToList();
             }
         }
 
-        [GraphQLMetadata("authors")]
-        public IEnumerable<Author> GetAuthors()
+        [GraphQLMetadata("movie")]
+        public Movie getMovie(int id)
         {
             using (var db = new StoreContext())
             {
-                return db.Authors
-                .Include(a => a.Books)
+                return db.Movies
+                .Include(m => m.Actors)
+                .SingleOrDefault(m => m.Id == id);
+            }
+        }
+
+        [GraphQLMetadata("actors")]
+        public IEnumerable<Actor> getActors()
+        {
+            using (var db = new StoreContext())
+            {
+                return db.Actors
                 .ToList();
             }
         }
 
-        [GraphQLMetadata("author")]
-        public Author GetAuthor(int id)
+        [GraphQLMetadata("actor")]
+        public Actor getActor(int id)
         {
             using (var db = new StoreContext())
             {
-                return db.Authors
-                .Include(a => a.Books)
+                return db.Actors
                 .SingleOrDefault(a => a.Id == id);
             }
-        }
-
-        [GraphQLMetadata("hello")]
-        public string GetHello()
-        {
-            return "World";
         }
     }
 }

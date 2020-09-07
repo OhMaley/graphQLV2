@@ -13,7 +13,11 @@ namespace graphQLV2.Database
             optionsBuilder.UseInMemoryDatabase("BooksDb");
         }
 
+        public DbSet<Movie> Movies { get; set; }
+        public DbSet<Actor> Actors { get; set; }
+        /*
         public DbSet<Book> Books { get; set; }
         public DbSet<Author> Authors { get; set; }
+        */
     }
 }

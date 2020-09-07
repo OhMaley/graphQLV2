@@ -15,31 +15,32 @@ namespace graphQLV2.GraphQL
         public CustomSchema()
         {
             this._schema = Schema.For(@"
-          type Book {
-            id: ID
-            name: String,
-            genre: String,
-            published: Date,
-            Author: Author
-          }
+                type Actor {
+                    id: ID
+                    name: String
+                    character: String
+                }
+                
+                type Movie {
+                    id: ID
+                    title: String
+                    year: String
+                    director: String
+                    actors: [Actor]
+                }
+                
+                type Query {
+                    movies: [Movie]
+                    movie(id: ID): Movie
+                    actors: [Actor]
+                    actor(id: ID): Actor
+                }
 
-          type Author {
-            id: ID,
-            name: String,
-            books: [Book]
-          }
-
-          type Mutation {
-            addAuthor(name: String): Author
-          }
-
-          type Query {
-              books: [Book]
-              author(id: ID): Author,
-              authors: [Author]
-              hello: String
-          }
-      ", _ =>
+                type Mutation {
+                    addMovie(title: String): Movie
+                    addActor(name: String): Actor
+                }
+            ", _ =>
             {
                 _.Types.Include<Query>();
                 _.Types.Include<Mutation>();

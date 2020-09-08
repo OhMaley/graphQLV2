@@ -29,25 +29,5 @@ namespace graphQLV2.GraphQL
                 .SingleOrDefault(m => m.Id == id);
             }
         }
-
-        [GraphQLMetadata("actors")]
-        public IEnumerable<Actor> getActors()
-        {
-            using (var db = new StoreContext())
-            {
-                return db.Actors
-                .ToList();
-            }
-        }
-
-        [GraphQLMetadata("actor")]
-        public Actor getActor(int id)
-        {
-            using (var db = new StoreContext())
-            {
-                return db.Actors
-                .SingleOrDefault(a => a.Id == id);
-            }
-        }
     }
 }

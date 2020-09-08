@@ -1,5 +1,8 @@
 ﻿using graphQLV2.Database;
 using GraphQL;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace graphQLV2.GraphQL
 {
@@ -18,15 +21,23 @@ namespace graphQLV2.GraphQL
             }
         }
 
-        [GraphQLMetadata("addActor")]
-        public Actor AddActor(string name)
+        [GraphQLMetadata("addActorToMovie")]
+        public Movie AddActorToMovie(int id, string name)
         {
+            Console.WriteLine("movieId {0}", id);
+            Console.WriteLine("name {0}", name);
             using (var db = new StoreContext())
             {
-                var actor = new Actor() { Name = name };
-                db.Actors.Add(actor);
-                db.SaveChanges();
-                return actor;
+                var movie = db.Movies
+                    .Include(m => m.Actors)
+                    .SingleOrDefault(m => m.Id == id);
+                if (!(movie is null))
+                {
+                    var actor = new Actor() { Name = name };
+                    movie.Actors.Add(actor);
+                    db.SaveChanges();
+                }
+                return movie;
             }
         }
     }

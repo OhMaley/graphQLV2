@@ -38,7 +38,7 @@ namespace graphQLV2.GraphQL
 
                 type Mutation {
                     addMovie(title: String): Movie
-                    addActor(name: String): Actor
+                    addActorToMovie(id: ID, name: String): Movie
                 }
             ", _ =>
             {

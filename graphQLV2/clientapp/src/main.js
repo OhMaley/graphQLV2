@@ -4,9 +4,10 @@ import App from './App.vue'
 Vue.config.productionTip = false
 
 new Vue({
-  render: h => h(App),
+    render: h => h(App)
 }).$mount('#app')
 
+/*
 console.log('Add Pierre');
 var addPierreStr = "mutation add { addAuthor(name: \"Pierre\") { id, name } }";
 
@@ -56,3 +57,4 @@ fetch('http://localhost:5000/graphql', {
 })
     .then(response => response.json())
     .then(data => console.log('get authors, response:', JSON.stringify(data.data, null, 2)));
+*/

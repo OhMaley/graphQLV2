@@ -15,6 +15,8 @@ namespace graphQLV2.Controllers
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] GraphQLQuery query)
         {
+            Console.WriteLine("GraphQLQuery: Query: {0}", query.Query);
+
             var schema = new CustomSchema();
             var inputs = query.Variables != null ? new Inputs((System.Collections.Generic.IDictionary<string, object>)query.Variables) : null;
 
@@ -27,8 +29,6 @@ namespace graphQLV2.Controllers
             });
 
             var json = JsonSerializer.Serialize(result.Data);
-
-            Console.WriteLine("GraphQLQuery: Query: {0}", query.Query);
             Console.WriteLine("json result: {0}", json);
 
             if (result.Errors?.Count > 0)

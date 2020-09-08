@@ -10,14 +10,10 @@ namespace graphQLV2.Database
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseInMemoryDatabase("BooksDb");
+            optionsBuilder.UseInMemoryDatabase("MoviesDb");
         }
 
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Actor> Actors { get; set; }
-        /*
-        public DbSet<Book> Books { get; set; }
-        public DbSet<Author> Authors { get; set; }
-        */
     }
 }

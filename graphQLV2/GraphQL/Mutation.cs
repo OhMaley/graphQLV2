@@ -10,11 +10,11 @@ namespace graphQLV2.GraphQL
     public class Mutation
     {
         [GraphQLMetadata("addMovie")]
-        public Movie AddMovie(string title)
+        public Movie AddMovie(string title, string year, string director)
         {
             using (var db = new StoreContext())
             {
-                var movie = new Movie() { Title = title };
+                var movie = new Movie() { Title = title, Year = year, Director = director };
                 db.Movies.Add(movie);
                 db.SaveChanges();
                 return movie;
@@ -22,10 +22,8 @@ namespace graphQLV2.GraphQL
         }
 
         [GraphQLMetadata("addActorToMovie")]
-        public Movie AddActorToMovie(int id, string name)
+        public Actor AddActorToMovie(int id, string name, string character)
         {
-            Console.WriteLine("movieId {0}", id);
-            Console.WriteLine("name {0}", name);
             using (var db = new StoreContext())
             {
                 var movie = db.Movies
@@ -33,11 +31,12 @@ namespace graphQLV2.GraphQL
                     .SingleOrDefault(m => m.Id == id);
                 if (!(movie is null))
                 {
-                    var actor = new Actor() { Name = name };
+                    var actor = new Actor() { Name = name, Character = character };
                     movie.Actors.Add(actor);
                     db.SaveChanges();
+                    return actor;
                 }
-                return movie;
+                return null;
             }
         }
     }
